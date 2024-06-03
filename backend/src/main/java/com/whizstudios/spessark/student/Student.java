@@ -1,10 +1,17 @@
 package com.whizstudios.spessark.student;
 
 import com.whizstudios.spessark.Utils.ClassLevel;
-import com.whizstudios.spessark.Utils.Subject;
 import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.admin.Admin;
+import com.whizstudios.spessark.score.Score;
+import com.whizstudios.spessark.teacher.Teacher;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -14,11 +21,13 @@ import lombok.Data;
 indexes = {
         @Index(name = "student_name_index", columnList = "name", unique = false)
 })
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
     @Id
     @SequenceGenerator(name = "student_no_generator", sequenceName = "student_no_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_no_generator")
-    private long id;
+    private Long id;
 
     @Embedded
     @AttributeOverrides({
@@ -35,11 +44,18 @@ public class Student {
     })
     private ClassLevel classLevel;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "name", column = @Column(name = "subject_name", nullable = false, columnDefinition = "TEXT")),
-            @AttributeOverride(name = "score", column = @Column(name = "score", nullable = false, columnDefinition = "NUMERIC"))
-    })
-    private Subject subject;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Score> scores = new ArrayList<>();
+
+    @ManyToOne
+    private Teacher teacher;
+
+    @ManyToOne
+    private Admin admin;
+
+    public Student(User user, ClassLevel classLevel) {
+        this.user = user;
+        this.classLevel = classLevel;
+    }
 }

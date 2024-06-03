@@ -21,7 +21,7 @@ public class Admin {
     @Id
     @SequenceGenerator(name = "admin_id_generator", sequenceName = "admin_id_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_id_generator")
-    private long id;
+    private Long id;
 
     @Embedded
     @AttributeOverrides({
@@ -34,6 +34,8 @@ public class Admin {
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 
-
-
+    public Admin(User user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 }

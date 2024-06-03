@@ -29,7 +29,7 @@ public class TeacherController {
         return teacherService.findTeacherByName(name).orElseThrow();
     }
 
-    @PostMapping("api/v1/teacher")
+    @PostMapping(path = "api/v1/teacher")
     boolean registerTeacher(@RequestBody Teacher teacher) {
         return teacherService.saveTeacher(teacher);
     }
@@ -43,4 +43,6 @@ public class TeacherController {
     boolean deleteTeacherByName(@PathVariable("name") String name) {
         return teacherService.deleteTeacherByName(name);
     }
+
+
 }

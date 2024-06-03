@@ -33,4 +33,9 @@ public class Teacher {
 
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
+
+    public Teacher(User user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 }

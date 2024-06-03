@@ -1,8 +1,8 @@
-package com.whizstudios.spessark.teacher;
+package com.whizstudios.spessark.subject;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+public interface SubjectRepository extends JpaRepository<Subject, Long> {
 }
