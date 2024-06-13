@@ -35,8 +35,8 @@ public class StudentController {
     }
 
     @PutMapping(path = "api/v1/students/update")
-    Student updateStudent(@RequestBody Student student) {
-        return studentService.updateStudent(student);
+    Student updateStudent(@RequestBody StudentUpdateRequest request) {
+        return studentService.updateStudent(request.getOldStudent(), request.getUpdate());
     }
 
     @DeleteMapping(path = "api/v1/students/delete/{name}")

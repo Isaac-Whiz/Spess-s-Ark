@@ -7,7 +7,7 @@ public interface StudentDAO {
     boolean saveStudent(Student student);
     Optional<Student> findStudentById(long id);
     Optional<Student> findStudentByName(String name);
-    Student updateStudent(Student update);
+    Student updateStudent(Student oldStudent, Student update);
     boolean deleteStudentById(long id);
     boolean deleteStudentByName(String name);
     List<Student> getStudents();

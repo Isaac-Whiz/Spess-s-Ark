@@ -1,5 +1,6 @@
 package com.whizstudios.spessark.student;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.whizstudios.spessark.Utils.ClassLevel;
 import com.whizstudios.spessark.Utils.User;
 import com.whizstudios.spessark.admin.Admin;
@@ -44,17 +45,17 @@ public class Student {
     })
     private ClassLevel classLevel;
 
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Score> scores = new ArrayList<>();
 
-    @ManyToOne
-    private Teacher teacher;
-
-    @ManyToOne
-    private Admin admin;
-
     public Student(User user, ClassLevel classLevel) {
+        this.user = user;
+        this.classLevel = classLevel;
+    }
+
+    public Student(Long id, User user, ClassLevel classLevel) {
+        this.id = id;
         this.user = user;
         this.classLevel = classLevel;
     }

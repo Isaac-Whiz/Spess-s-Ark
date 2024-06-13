@@ -5,6 +5,8 @@ import com.whizstudios.spessark.subject.SubjectService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class ScoreService implements ScoreDAO {
 
@@ -35,16 +37,15 @@ public class ScoreService implements ScoreDAO {
     }
 
     @Override
-    public boolean updateScore(Score update) {
-        var oldScore = findScoreByName(update.getSubject().getName());
-        oldScore.setScores(update.getScores());
-        scoreRepository.save(oldScore);
-        return findScoreByName(update.getSubject().getName()) != null;
+    public void updateScore(Score oldScore, Score update) {
+        var retrieved = scoreRepository.findAll().stream().filter(score ->
+                Objects.equals(score.getSubject().getName(), oldScore.getSubject().getName())
+                && Objects.equals(score.getScores(), oldScore.getScores())
+                && Objects.equals(score.getStudent().getUser().getName(), oldScore.getStudent().getUser().getName())).findFirst().get();
+        if (retrieved != null) {
+            scoreRepository.save(update);
+        }
     }
 
-    @Override
-    public Score findScoreByName(String name) {
-        return scoreRepository.findAll().stream().filter(score -> score.getSubject().getName().equals(name)).findFirst().orElseThrow();
-    }
 }
 

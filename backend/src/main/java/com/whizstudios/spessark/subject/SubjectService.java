@@ -3,6 +3,7 @@ package com.whizstudios.spessark.subject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SubjectService implements SubjectDAO {
@@ -37,9 +38,9 @@ public class SubjectService implements SubjectDAO {
 
     @Override
     public boolean updateSubject(String oldName, String newName) {
-        var subject = findSubjectByName(oldName);
-        subject.setName(newName);
-        subjectRepository.save(subject);
+        var retrievedOld = subjectRepository.findAll().stream().filter( subject -> Objects.equals(subject.getName(), oldName)).findFirst().get();
+        retrievedOld.setName(newName);
+        subjectRepository.save(retrievedOld);
 
         return findSubjectByName(newName) != null;
     }

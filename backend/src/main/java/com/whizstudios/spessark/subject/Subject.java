@@ -26,9 +26,6 @@ public class Subject {
     @Column(name = "name", columnDefinition = "TEXT")
     private String name;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Score> scores = new ArrayList<>();
-
     public Subject(String name) {
         this.name = name;
     }

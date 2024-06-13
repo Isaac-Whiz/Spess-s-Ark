@@ -1,5 +1,6 @@
 package com.whizstudios.spessark.score;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.whizstudios.spessark.student.Student;
 import com.whizstudios.spessark.subject.Subject;
 import jakarta.persistence.*;
@@ -24,6 +25,7 @@ public class Score {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
+    @JsonBackReference
     private Student student;
 
     @ManyToOne

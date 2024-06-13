@@ -1,12 +1,15 @@
 package com.whizstudios.spessark.admin;
 
+import com.whizstudios.spessark.Utils.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class AdminService implements AdminDAO{
+public class AdminService implements AdminDAO {
     private final AdminRepository adminRepository;
 
     public AdminService(AdminRepository adminRepository) {
@@ -14,23 +17,30 @@ public class AdminService implements AdminDAO{
     }
 
     @Override
-    public boolean saveAdmin(Admin admin) {
+    public Admin saveAdmin(Admin admin) {
+        var adminName = admin.getUser().getName();
+        var adminGender = admin.getUser().getGender();
         adminRepository.save(admin);
-        var savedAdmin = this.findAdminByName(admin.getUser().getName());
 
-        return savedAdmin.isPresent();
+        var savedAdmin = adminRepository.findAll().stream().findFirst().orElseThrow();
+
+        var result =  Objects.equals(savedAdmin.getUser().getName(), adminName)
+                && Objects.equals(savedAdmin.getUser().getGender(), adminGender);
+        if (result) {
+            return savedAdmin;
+        }
+        return new Admin();
     }
 
     @Override
-    public Admin updateAdmin(Admin adminUpdate) {
-        var oldAdmin = adminRepository.findById(adminUpdate.getId());
+    public Admin updateAdmin(Admin oldAdmin, Admin adminUpdate) {
+        var retrievedAdmin = adminRepository.findAll().stream().filter(
+                admin -> admin.getUser().getName().equals(oldAdmin.getUser().getName()) &&
+                        admin.getUser().getGender().equals(oldAdmin.getUser().getGender())).findFirst().orElseThrow();
+        adminUpdate.setId(retrievedAdmin.getId());
+        adminRepository.save(adminUpdate);
 
-        if (oldAdmin.isPresent()) {
-            if (oldAdmin.get().getId() == adminUpdate.getId()) {
-                adminRepository.save(adminUpdate);
-            }
-        }
-        return this.findAdminById(adminUpdate.getId()).orElseThrow();
+        return adminRepository.findAll().stream().findFirst().orElseThrow();
     }
 
     @Override

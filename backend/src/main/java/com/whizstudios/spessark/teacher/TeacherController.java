@@ -1,6 +1,5 @@
 package com.whizstudios.spessark.teacher;
 
-import com.whizstudios.spessark.student.Student;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,8 +34,8 @@ public class TeacherController {
     }
 
     @PutMapping(path = "api/v1/teachers/update")
-    Teacher updateTeacher(@RequestBody Teacher teacher) {
-        return teacherService.updateTeacher(teacher);
+    Teacher updateTeacher(@RequestBody TeacherUpdateRequest request) {
+        return teacherService.updateTeacher(request.getOldTeacher(), request.getUpdate());
     }
 
     @DeleteMapping(path = "api/v1/teachers/delete/{name}")

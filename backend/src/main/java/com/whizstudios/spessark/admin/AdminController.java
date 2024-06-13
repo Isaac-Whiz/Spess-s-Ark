@@ -29,13 +29,13 @@ public class AdminController {
     }
 
     @PostMapping("api/v1/admin")
-    boolean registerAdmin(@RequestBody Admin admin) {
+    Admin registerAdmin(@RequestBody Admin admin) {
         return adminService.saveAdmin(admin);
     }
 
     @PutMapping(path = "api/v1/admins/update")
-    Admin updateAdmin(@RequestBody Admin admin) {
-        return adminService.updateAdmin(admin);
+    Admin updateAdmin(@RequestBody AdminUpdateRequest request) {
+        return adminService.updateAdmin(request.getOldAdmin(), request.getUpdate());
     }
 
     @DeleteMapping(path = "api/v1/admins/delete/{name}")

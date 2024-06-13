@@ -3,6 +3,7 @@ package com.whizstudios.spessark.teacher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,14 +34,13 @@ public class TeacherService implements TeacherDAO{
     }
 
     @Override
-    public Teacher updateTeacher(Teacher teacherUpdate) {
-        var oldTeacher = teacherRepository.findById(teacherUpdate.getId());
+    public Teacher updateTeacher(Teacher orgTeacher, Teacher teacherUpdate) {
+        var oldTeacher = teacherRepository.findAll().stream().filter(
+                teacher -> Objects.equals(teacher.getUser().getName(), orgTeacher.getUser().getName())
+                && Objects.equals(teacher.getUser().getGender().name(), orgTeacher.getUser().getGender().name())).findFirst().get();
+        teacherUpdate.setId(oldTeacher.getId());
+        teacherRepository.save(teacherUpdate);
 
-        if (oldTeacher.isPresent()) {
-            if (oldTeacher.get().getId() == teacherUpdate.getId()) {
-                teacherRepository.save(teacherUpdate);
-            }
-        }
         return this.findTeacherById(teacherUpdate.getId()).orElseThrow();
     }
 

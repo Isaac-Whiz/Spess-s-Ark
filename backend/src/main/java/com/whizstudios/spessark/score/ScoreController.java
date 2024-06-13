@@ -17,7 +17,7 @@ public class ScoreController {
     }
 
     @PutMapping(path = "api/v1/scores/update")
-    public boolean updateScore(Score scoreUpdate) {
-        return scoreService.updateScore(scoreUpdate);
+    public void updateScore(ScoreUpdateRequest request) {
+        scoreService.updateScore(request.getOldScore(), request.getUpdate());
     }
 }

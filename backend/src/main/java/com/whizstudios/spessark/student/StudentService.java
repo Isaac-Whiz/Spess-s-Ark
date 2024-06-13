@@ -3,6 +3,7 @@ package com.whizstudios.spessark.student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,14 +34,13 @@ public class StudentService implements StudentDAO{
     }
 
     @Override
-    public Student updateStudent(Student update) {
-        var oldStu = studentRepository.findById(update.getId());
-
-        if (oldStu.isPresent()) {
-            if (oldStu.get().getId() == update.getId()) {
-                studentRepository.save(update);
-            }
-        }
+    public Student updateStudent(Student oldStudent, Student update) {
+        var oldStu = studentRepository.findAll().stream().filter(
+                student -> Objects.equals(student.getUser().getName(), oldStudent.getUser().getName())
+                && Objects.equals(student.getUser().getGender(), oldStudent.getUser().getGender())
+                && Objects.equals(student.getClassLevel().getName(), oldStudent.getClassLevel().getName())).findFirst().get();
+        update.setId(oldStu.getId());
+        studentRepository.save(update);
         return this.findStudentById(update.getId()).orElseThrow();
     }
 

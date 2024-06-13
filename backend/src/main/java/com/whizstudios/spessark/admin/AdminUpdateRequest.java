@@ -1,0 +1,11 @@
+package com.whizstudios.spessark.admin;
+
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+@Data
+@Component
+public class AdminUpdateRequest {
+    private Admin oldAdmin;
+    private Admin update;
+}
