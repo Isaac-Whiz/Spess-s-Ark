@@ -38,9 +38,10 @@ public class AdminService implements AdminDAO {
                 admin -> admin.getUser().getName().equals(oldAdmin.getUser().getName()) &&
                         admin.getUser().getGender().equals(oldAdmin.getUser().getGender())).findFirst().orElseThrow();
         adminUpdate.setId(retrievedAdmin.getId());
+        adminUpdate.setPassword(retrievedAdmin.getPassword());
         adminRepository.save(adminUpdate);
 
-        return adminRepository.findAll().stream().findFirst().orElseThrow();
+        return this.findAdminByName(adminUpdate.getUser().getName()).orElseThrow();
     }
 
     @Override

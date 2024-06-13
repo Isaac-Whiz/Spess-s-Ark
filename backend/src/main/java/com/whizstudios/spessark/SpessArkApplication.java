@@ -24,6 +24,7 @@ public class SpessArkApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpessArkApplication.class, args);
 
+
     }
 //    @Bean
 //    CommandLineRunner runner(ScoreService scoreService, SubjectService subjectService, AdminService adminService, StudentService studentService, TeacherService teacherService) {

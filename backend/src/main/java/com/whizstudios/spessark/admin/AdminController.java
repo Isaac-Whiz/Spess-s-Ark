@@ -18,12 +18,12 @@ public class AdminController {
         return adminService.getAllAdmins();
     }
 
-    @GetMapping(path = "api/v1/admins/{id}")
+    @GetMapping(path = "api/v1/admins/findById/{id}")
     Admin getAdminById(@PathVariable("id") long id) {
         return adminService.findAdminById(id).orElseThrow();
     }
 
-    @GetMapping(path = "api/v1/admins/{name}")
+    @GetMapping(path = "api/v1/admins/findByName/{name}")
     Admin getAdminByName(@PathVariable("name") String name) {
         return adminService.findAdminByName(name).orElseThrow();
     }

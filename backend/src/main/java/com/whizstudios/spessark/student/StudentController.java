@@ -19,17 +19,17 @@ public class StudentController {
         return studentService.getStudents();
     }
 
-    @GetMapping(path = "api/v1/students/{id}")
+    @GetMapping(path = "api/v1/students/findById/{id}")
     Student getStudentById(@PathVariable("id") long id) {
         return studentService.findStudentById(id).orElseThrow();
     }
 
-    @GetMapping(path = "api/v1/students/{name}")
+    @GetMapping(path = "api/v1/students/findByName/{name}")
     Student getStudentByName(@PathVariable("name") String name) {
         return studentService.findStudentByName(name).orElseThrow();
     }
 
-    @PostMapping("api/v1/student")
+    @PostMapping("api/v1/student/register")
     boolean registerStudent(@RequestBody Student student) {
         return studentService.saveStudent(student);
     }

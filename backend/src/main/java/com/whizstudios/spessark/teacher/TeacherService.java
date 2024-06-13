@@ -39,6 +39,7 @@ public class TeacherService implements TeacherDAO{
                 teacher -> Objects.equals(teacher.getUser().getName(), orgTeacher.getUser().getName())
                 && Objects.equals(teacher.getUser().getGender().name(), orgTeacher.getUser().getGender().name())).findFirst().get();
         teacherUpdate.setId(oldTeacher.getId());
+        teacherUpdate.setPassword(oldTeacher.getPassword());
         teacherRepository.save(teacherUpdate);
 
         return this.findTeacherById(teacherUpdate.getId()).orElseThrow();

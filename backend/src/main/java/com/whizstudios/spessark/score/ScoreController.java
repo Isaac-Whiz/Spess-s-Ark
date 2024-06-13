@@ -17,7 +17,7 @@ public class ScoreController {
     }
 
     @PutMapping(path = "api/v1/scores/update")
-    public void updateScore(ScoreUpdateRequest request) {
+    public void updateScore(@RequestBody ScoreUpdateRequest request) {
         scoreService.updateScore(request.getOldScore(), request.getUpdate());
     }
 }

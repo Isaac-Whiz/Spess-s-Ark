@@ -37,15 +37,21 @@ public class ScoreService implements ScoreDAO {
     }
 
     @Override
-    public void updateScore(Score oldScore, Score update) {
-        var retrieved = scoreRepository.findAll().stream().filter(score ->
-                Objects.equals(score.getSubject().getName(), oldScore.getSubject().getName())
-                && Objects.equals(score.getScores(), oldScore.getScores())
-                && Objects.equals(score.getStudent().getUser().getName(), oldScore.getStudent().getUser().getName())).findFirst().get();
-        if (retrieved != null) {
-            scoreRepository.save(update);
-        }
-    }
+    public void updateScore(ScoreTransient oldScore, ScoreTransient update) {
+        var retrievedSubject = subjectService.getSubjects().stream().filter(subject ->
+                Objects.equals(subject.getName(), oldScore.getSubjectName())).findFirst().orElseThrow();
 
+        var retrievedStudent = studentService.getStudents().stream().filter(student ->
+                Objects.equals(student.getUser().getName(), oldScore.getStudentName())).findFirst().orElseThrow();
+
+        var retrievedScore = scoreRepository.findAll().stream().filter(
+                score -> Objects.equals(score.getScores(), oldScore.getScores())
+                         && Objects.equals(score.getSubject().getId(), retrievedSubject.getId())
+                        && Objects.equals(score.getStudent().getId(), retrievedStudent.getId()))
+                .findFirst().orElseThrow();
+
+        retrievedScore.setScores(update.getScores());
+       scoreRepository.save(retrievedScore);
+    }
 }
 

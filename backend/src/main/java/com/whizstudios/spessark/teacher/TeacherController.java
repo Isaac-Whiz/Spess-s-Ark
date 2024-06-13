@@ -18,12 +18,12 @@ public class TeacherController {
         return teacherService.getAllTeachers();
     }
 
-    @GetMapping(path = "api/v1/teachers/{id}")
+    @GetMapping(path = "api/v1/teachers/findById/{id}")
     Teacher getTeacherById(@PathVariable("id") long id) {
         return teacherService.findTeacherById(id).orElseThrow();
     }
 
-    @GetMapping(path = "api/v1/teachers/{name}")
+    @GetMapping(path = "api/v1/teachers/findByName/{name}")
     Teacher getTeacherByName(@PathVariable("name") String name) {
         return teacherService.findTeacherByName(name).orElseThrow();
     }
