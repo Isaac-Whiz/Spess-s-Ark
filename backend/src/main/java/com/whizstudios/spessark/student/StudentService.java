@@ -3,6 +3,7 @@ package com.whizstudios.spessark.student;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
