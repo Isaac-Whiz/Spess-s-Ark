@@ -1,6 +1,6 @@
 package com.whizstudios.spessark.teacher;
 
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.utils.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

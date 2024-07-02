@@ -1,5 +1,6 @@
 package com.whizstudios.spessark.teacher;
 
+import com.whizstudios.spessark.security.SecurityConfig;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +11,17 @@ import java.util.Optional;
 public class TeacherService implements TeacherDAO{
 
     private final TeacherRepository teacherRepository;
+    private final SecurityConfig config;
 
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository, SecurityConfig config) {
         this.teacherRepository = teacherRepository;
+        this.config = config;
     }
 
     @Override
     public boolean saveTeacher(Teacher teacher) {
+        var encodedPassword = config.passwordEncoder().encode(teacher.getPassword());
+        teacher.setPassword(encodedPassword);
         teacherRepository.save(teacher);
         var savedTeacher = this.findTeacherByName(teacher.getUser().getName());
         return savedTeacher.isPresent();

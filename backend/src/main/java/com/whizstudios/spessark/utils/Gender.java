@@ -1,4 +1,4 @@
-package com.whizstudios.spessark.Utils;
+package com.whizstudios.spessark.utils;
 
 public enum Gender {
     MALE,

@@ -1,8 +1,8 @@
 package com.whizstudios.spessark.teacher;
 
 import com.whizstudios.spessark.GenericTestsClass;
-import com.whizstudios.spessark.Utils.Gender;
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.utils.Gender;
+import com.whizstudios.spessark.utils.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

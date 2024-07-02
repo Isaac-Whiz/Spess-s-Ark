@@ -1,7 +1,6 @@
-package com.whizstudios.spessark.Utils;
+package com.whizstudios.spessark.utils;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,8 @@
 package com.whizstudios.spessark.teacher;
 
 import com.github.javafaker.Faker;
-import com.whizstudios.spessark.Utils.Gender;
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.utils.Gender;
+import com.whizstudios.spessark.utils.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

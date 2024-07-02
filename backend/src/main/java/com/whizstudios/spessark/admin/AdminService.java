@@ -1,25 +1,28 @@
 package com.whizstudios.spessark.admin;
 
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.security.SecurityConfig;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class AdminService implements AdminDAO {
     private final AdminRepository adminRepository;
+    private final SecurityConfig config;
 
-    public AdminService(AdminRepository adminRepository) {
+    public AdminService(AdminRepository adminRepository, SecurityConfig config) {
         this.adminRepository = adminRepository;
+        this.config = config;
     }
 
     @Override
     public Admin saveAdmin(Admin admin) {
+        String encodedPassword = config.passwordEncoder().encode(admin.getPassword());
         var adminName = admin.getUser().getName();
         var adminGender = admin.getUser().getGender();
+        admin.setPassword(encodedPassword);
         adminRepository.save(admin);
 
         var savedAdmin = adminRepository.findAll().stream().findFirst().orElseThrow();

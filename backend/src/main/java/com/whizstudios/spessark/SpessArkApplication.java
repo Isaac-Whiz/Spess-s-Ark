@@ -1,22 +1,7 @@
 package com.whizstudios.spessark;
 
-import com.whizstudios.spessark.Utils.*;
-import com.whizstudios.spessark.admin.Admin;
-import com.whizstudios.spessark.admin.AdminService;
-import com.whizstudios.spessark.score.Score;
-import com.whizstudios.spessark.score.ScoreService;
-import com.whizstudios.spessark.student.Student;
-import com.whizstudios.spessark.student.StudentService;
-import com.whizstudios.spessark.subject.Subject;
-import com.whizstudios.spessark.subject.SubjectService;
-import com.whizstudios.spessark.teacher.Teacher;
-import com.whizstudios.spessark.teacher.TeacherService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class SpessArkApplication {

@@ -1,11 +1,9 @@
 package com.whizstudios.spessark.student;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.whizstudios.spessark.Utils.ClassLevel;
-import com.whizstudios.spessark.Utils.User;
-import com.whizstudios.spessark.admin.Admin;
+import com.whizstudios.spessark.utils.ClassLevel;
+import com.whizstudios.spessark.utils.User;
 import com.whizstudios.spessark.score.Score;
-import com.whizstudios.spessark.teacher.Teacher;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

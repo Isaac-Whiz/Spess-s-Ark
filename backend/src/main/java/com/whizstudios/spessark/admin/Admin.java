@@ -1,6 +1,6 @@
 package com.whizstudios.spessark.admin;
 
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.utils.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +31,7 @@ public class Admin {
     })
     private User user;
 
+    
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 

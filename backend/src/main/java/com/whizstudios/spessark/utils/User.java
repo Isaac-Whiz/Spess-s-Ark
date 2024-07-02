@@ -1,4 +1,4 @@
-package com.whizstudios.spessark.Utils;
+package com.whizstudios.spessark.utils;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

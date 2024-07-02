@@ -1,8 +1,8 @@
 package com.whizstudios.spessark.admin;
 
 import com.github.javafaker.Faker;
-import com.whizstudios.spessark.Utils.Gender;
-import com.whizstudios.spessark.Utils.User;
+import com.whizstudios.spessark.utils.Gender;
+import com.whizstudios.spessark.utils.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
