@@ -31,8 +31,9 @@ public class AdminRepositoryTest extends GenericTestsClass {
         //Given
         var admin = new Admin(new User(
                 faker.name().firstName(),
-                Gender.MALE,
+                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.name().name());
         //When
         repository.save(admin);
@@ -47,6 +48,7 @@ public class AdminRepositoryTest extends GenericTestsClass {
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.name().name());
         //When
         repository.save(admin);
@@ -64,6 +66,7 @@ public class AdminRepositoryTest extends GenericTestsClass {
                 oldName,
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 oldName);
         //When
         repository.save(oldAdmin);
@@ -112,26 +115,31 @@ public class AdminRepositoryTest extends GenericTestsClass {
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.internet().password());
         var oldAdmin2 = new Admin(new User(
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.internet().password());
         var oldAdmin3 = new Admin(new User(
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.internet().password());
         var oldAdmin4 = new Admin(new User(
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.internet().password());
         var oldAdmin5 = new Admin(new User(
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.internet().password());
         repository.save(oldAdmin);
         repository.save(oldAdmin2);
@@ -145,6 +153,7 @@ public class AdminRepositoryTest extends GenericTestsClass {
                 faker.name().firstName(),
                 Gender.MALE,
                 LocalDateTime.now()),
+                faker.internet().emailAddress(),
                 faker.name().name());
         repository.save(admin);
     }

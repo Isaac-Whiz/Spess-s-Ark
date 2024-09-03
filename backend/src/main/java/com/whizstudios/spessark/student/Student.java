@@ -8,20 +8,20 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(name = "student_no_unique", columnNames = "studentno")
-},
+@Table(
 indexes = {
-        @Index(name = "student_name_index", columnList = "name", unique = false)
+        @Index(name = "student_name_index", columnList = "name")
 })
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "scores")
 public class Student {
     @Id
     @SequenceGenerator(name = "student_no_generator", sequenceName = "student_no_sequence", allocationSize = 1)
@@ -43,9 +43,10 @@ public class Student {
     })
     private ClassLevel classLevel;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Score> scores = new ArrayList<>();
+
 
     public Student(User user, ClassLevel classLevel) {
         this.user = user;

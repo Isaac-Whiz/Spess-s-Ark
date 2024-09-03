@@ -2,6 +2,7 @@ package com.whizstudios.spessark.admin;
 
 import com.whizstudios.spessark.utils.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,12 +32,16 @@ public class Admin {
     })
     private User user;
 
-    
+    @Email
+    @Column(name = "email", nullable = false, columnDefinition = "TEXT")
+    private String email;
+
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 
-    public Admin(User user, String password) {
+    public Admin(User user, String email, String password) {
         this.user = user;
+        this.email = email;
         this.password = password;
     }
 }

@@ -1,6 +1,8 @@
 package com.whizstudios.spessark.auth;
 
+import com.whizstudios.spessark.admin.Admin;
 import com.whizstudios.spessark.admin.AdminService;
+import com.whizstudios.spessark.teacher.Teacher;
 import com.whizstudios.spessark.teacher.TeacherService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class SpessUserDetailsService implements UserDetailsService {
@@ -20,21 +23,36 @@ public class SpessUserDetailsService implements UserDetailsService {
         this.teacherService = teacherService;
     }
 
+@Override
+public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    Optional<Admin> adminUserOpt = Optional.empty();
+    try {
+        adminUserOpt = adminService.findAdminByEmail(email);
+    } catch (Exception e) {}
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var adminUser = adminService.findAdminByName(username).get();
-        // TODO: 7/2/2024 Ensure that the teacher user can also be fetched
-
-       if (adminUser != null) {
-                     return new org.springframework.security.core.userdetails
-                   .User(adminUser.getUser().getName(), adminUser.getPassword(),
-                   new ArrayList<>());
-       } else {
-           var teacherUser = teacherService.findTeacherByName(username).get();
-           return new org.springframework.security.core.userdetails.
-                   User(teacherUser.getUser().getName(), teacherUser.getPassword(),
-                   new ArrayList<>());
-       }
+    if (adminUserOpt.isPresent()) {
+        Admin adminUser = adminUserOpt.get();
+        return new org.springframework.security.core.userdetails.User(
+                adminUser.getEmail(),
+                adminUser.getPassword(),
+                new ArrayList<>()
+        );
     }
+
+    Optional<Teacher> teacherUserOpt = Optional.empty();
+    try {
+        teacherUserOpt = teacherService.findTeacherByEmail(email);
+    } catch (Exception e) {}
+
+    if (teacherUserOpt.isPresent()) {
+        Teacher teacherUser = teacherUserOpt.get();
+        return new org.springframework.security.core.userdetails.User(
+                teacherUser.getEmail(),
+                teacherUser.getPassword(),
+                new ArrayList<>()
+        );
+    }
+    throw new UsernameNotFoundException("User not found.");
+}
+
 }

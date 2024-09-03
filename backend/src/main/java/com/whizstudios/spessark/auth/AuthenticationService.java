@@ -20,12 +20,12 @@ public class AuthenticationService {
     public AuthResponse login(AuthRequest request) {
         Authentication authentication = manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.username(),
+                        request.email(),
                         request.password()
                 ));
 
         if (authentication.isAuthenticated()) {
-            return new AuthResponse(util.generateToken(request.username()));
+            return new AuthResponse(util.generateToken(request.email()));
         }
         else {
             throw new RuntimeException();

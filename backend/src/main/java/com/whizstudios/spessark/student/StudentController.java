@@ -1,7 +1,9 @@
 package com.whizstudios.spessark.student;
 
+import com.whizstudios.spessark.utils.StudentScore;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,8 +32,8 @@ public class StudentController {
     }
 
     @PostMapping("api/v1/student/register")
-    boolean registerStudent(@RequestBody Student student) {
-        return studentService.saveStudent(student);
+    boolean registerStudent(@RequestBody StudentScore studentScore) {
+        return studentService.saveStudent(studentScore.getStudent(), studentScore.getScore());
     }
 
     @PutMapping(path = "api/v1/students/update")
@@ -42,6 +44,11 @@ public class StudentController {
     @DeleteMapping(path = "api/v1/students/delete/{name}")
     boolean deleteStudentByName(@PathVariable("name") String name) {
         return studentService.deleteStudentByName(name);
+    }
+
+    @DeleteMapping(path = "api/v1/students/delete/id/{id}")
+    boolean deleteStudentById(@PathVariable("id") Long id) {
+        return studentService.deleteStudentById(id);
     }
 
 }

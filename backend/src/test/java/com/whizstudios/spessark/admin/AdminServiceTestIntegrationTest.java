@@ -37,8 +37,10 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldSaveAdmin() {
         //Given
         var name = faker.name().name();
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(name, Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         // When
@@ -55,11 +57,13 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
 
         //Given
         var name = faker.name().name();
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(name, Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
         var update = new Admin(
-                 1L, new User("Luti", Gender.FEMALE, LocalDateTime.now()),
+                 1L, new User("Luti", Gender.FEMALE, LocalDateTime.now()), email,
                 "faker.internet().newPassword()");
 
         //When
@@ -77,8 +81,10 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldDeleteAdminById() {
         //Given
         var id = 1L;
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 id, new User("Kapiito Alemye", Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
         //When
         var saved = service.saveAdmin(admin);
@@ -95,8 +101,10 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldDeleteAdminByName() {
 
         //Given
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         //When
@@ -112,8 +120,10 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldFindAdminById() {
         //Given
         var id = 1L;
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 id, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         //When
@@ -128,8 +138,10 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldFindAdminByName() {
         //Given
         var name = faker.name().name();
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(name, Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         //When
@@ -146,20 +158,25 @@ class AdminServiceTestIntegrationTest extends GenericTestsClass {
     void itShouldGetAllAdmins() {
 
         //Given
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         var admin2 = new Admin(
                 1L, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         var admin3 = new Admin(
                 1L, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         var admin4 = new Admin(
                 1L, new User(faker.name().name(), Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         //When

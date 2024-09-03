@@ -1,0 +1,40 @@
+server:
+    error:
+        include-message: always
+    port: ${app_port}
+spring:
+    application:
+        name: Spess Ark
+    datasource:
+        password: ${db_password}
+        url: ${db_url}
+        username: ${db_username}
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    main:
+        web-application-type: servlet
+        allow-circular-references: true
+    mail:
+        host: ${mail_host}
+        port: ${mail_port}
+        username: ${mail_username}
+        password: ${mail_password}
+        properties:
+          mail:
+              smtp:
+                  auth: true
+                  starttls:
+                      enable: true
+
+cors:
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "*"
+
+frontend-url: ${frontend_url}
+admin-url: ${admin_url}
+test-url: ${test_url}
+admin-password: ${admin_password}
+admin-name: ${admin_name}

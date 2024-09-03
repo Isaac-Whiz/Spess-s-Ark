@@ -11,9 +11,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(name = "subject_name_unique", columnNames = "name")
-})
 @AllArgsConstructor
 @NoArgsConstructor
 public class Subject {
@@ -29,4 +26,5 @@ public class Subject {
     public Subject(String name) {
         this.name = name;
     }
-}
+
+ }

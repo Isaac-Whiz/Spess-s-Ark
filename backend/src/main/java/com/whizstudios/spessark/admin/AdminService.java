@@ -1,6 +1,7 @@
 package com.whizstudios.spessark.admin;
 
 import com.whizstudios.spessark.security.SecurityConfig;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,11 @@ public class AdminService implements AdminDAO {
     }
 
     @Override
+    @Transactional
     public Admin saveAdmin(Admin admin) {
         String encodedPassword = config.passwordEncoder().encode(admin.getPassword());
         var adminName = admin.getUser().getName();
+        var adminEmail = admin.getEmail();
         var adminGender = admin.getUser().getGender();
         admin.setPassword(encodedPassword);
         adminRepository.save(admin);
@@ -28,7 +31,8 @@ public class AdminService implements AdminDAO {
         var savedAdmin = adminRepository.findAll().stream().findFirst().orElseThrow();
 
         var result =  Objects.equals(savedAdmin.getUser().getName(), adminName)
-                && Objects.equals(savedAdmin.getUser().getGender(), adminGender);
+                && Objects.equals(savedAdmin.getUser().getGender(), adminGender)
+                && Objects.equals(savedAdmin.getEmail(), adminEmail);
         if (result) {
             return savedAdmin;
         }
@@ -36,24 +40,28 @@ public class AdminService implements AdminDAO {
     }
 
     @Override
+    @Transactional
     public Admin updateAdmin(Admin oldAdmin, Admin adminUpdate) {
         var retrievedAdmin = adminRepository.findAll().stream().filter(
                 admin -> admin.getUser().getName().equals(oldAdmin.getUser().getName()) &&
-                        admin.getUser().getGender().equals(oldAdmin.getUser().getGender())).findFirst().orElseThrow();
+                        admin.getUser().getGender().equals(oldAdmin.getUser().getGender()) &&
+                        admin.getEmail().equals(oldAdmin.getEmail())).findFirst().orElseThrow();
         adminUpdate.setId(retrievedAdmin.getId());
         adminUpdate.setPassword(retrievedAdmin.getPassword());
         adminRepository.save(adminUpdate);
 
-        return this.findAdminByName(adminUpdate.getUser().getName()).orElseThrow();
+        return this.findAdminByEmail(adminUpdate.getEmail()).orElseThrow();
     }
 
     @Override
+    @Transactional
     public boolean deleteAdminById(long id) {
         adminRepository.deleteById(id);
         return !adminRepository.existsById(id);
     }
 
     @Override
+    @Transactional
     public boolean deleteAdminByName(String name) {
         var deletableAdminId = getId(name);
         return this.deleteAdminById(deletableAdminId);
@@ -65,14 +73,15 @@ public class AdminService implements AdminDAO {
     }
 
     @Override
-    public Optional<Admin> findAdminByName(String name) {
-        var adminId = getId(name);
+    public Optional<Admin> findAdminByEmail(String email) {
+        var adminId = getId(email);
+
         return this.findAdminById(adminId);
     }
 
-    private long getId(String name) {
+    private long getId(String email) {
         return this.getAllAdmins().stream().filter(
-                admin -> admin.getUser().getName().matches(name)
+                admin -> admin.getEmail().matches(email)
         ).findFirst().orElseThrow().getId();
     }
 

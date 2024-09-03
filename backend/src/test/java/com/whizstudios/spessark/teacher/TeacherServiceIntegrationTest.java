@@ -68,7 +68,7 @@ class TeacherServiceIntegrationTest {
         service.saveTeacher(teacher);
         var teachers = service.getAllTeachers();
         //When
-        var result = service.findTeacherByName(name).get();
+        var result = service.findTeacherByEmail(name).get();
         //Then
         assertEquals(name, result.getUser().getName());
         assertEquals(1, teachers.size());
@@ -110,8 +110,11 @@ class TeacherServiceIntegrationTest {
         //Given
         var id = 1L;
         var name = faker.name().name();
+        var subject = faker.superhero().name();
+        var email = faker.internet().emailAddress();
         var teacher = new Teacher(id, new User(name, Gender.FEMALE, LocalDateTime.now()),
-                faker.internet().password());
+                email,
+                faker.internet().password(), subject);
         service.saveTeacher(teacher);
         //When
         var result = service.deleteTeacherByName(name);
@@ -135,6 +138,5 @@ class TeacherServiceIntegrationTest {
         service.saveTeacher(teacher3);
         //Then
         assertEquals(3, service.getAllTeachers().size());
-
     }
 }

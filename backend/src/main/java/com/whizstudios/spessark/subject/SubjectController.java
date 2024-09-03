@@ -13,9 +13,9 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    @PostMapping(path = "api/v1/subject/{name}")
-    public boolean addSubject(@PathVariable("name") String name) {
-        return subjectService.addSubject(name);
+    @PostMapping(path = "api/v1/subject")
+    public boolean addSubject(@RequestBody Subject subject) {
+        return subjectService.addSubject(subject.getName());
     }
 
     @PutMapping(path = "api/v1/subjects/{oldName}/{newName}")

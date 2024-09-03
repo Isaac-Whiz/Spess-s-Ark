@@ -22,10 +22,10 @@ public class AdminController {
     Admin getAdminById(@PathVariable("id") long id) {
         return adminService.findAdminById(id).orElseThrow();
     }
-
+ 
     @GetMapping(path = "api/v1/admins/findByName/{name}")
     Admin getAdminByName(@PathVariable("name") String name) {
-        return adminService.findAdminByName(name).orElseThrow();
+        return adminService.findAdminByEmail(name).orElseThrow();
     }
 
     @PostMapping("api/v1/admin")

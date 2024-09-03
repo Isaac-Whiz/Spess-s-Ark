@@ -1,5 +1,6 @@
 package com.whizstudios.spessark.subject;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,9 +16,13 @@ public class SubjectService implements SubjectDAO {
     }
 
     @Override
+    @Transactional
     public boolean addSubject(String name) {
         var subject = new Subject(name);
-        subjectRepository.save(subject);
+
+        if (!subjectRepository.existsByName(name)) {
+            subjectRepository.save(subject);
+        }
         var saved = findSubjectByName(name);
 
         return saved.getName().equals(name);
@@ -37,6 +42,7 @@ public class SubjectService implements SubjectDAO {
     }
 
     @Override
+    @Transactional
     public boolean updateSubject(String oldName, String newName) {
         var retrievedOld = subjectRepository.findAll().stream().filter( subject -> Objects.equals(subject.getName(), oldName)).findFirst().get();
         retrievedOld.setName(newName);

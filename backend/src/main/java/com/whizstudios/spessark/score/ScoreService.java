@@ -5,6 +5,7 @@ import com.whizstudios.spessark.subject.SubjectService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -23,35 +24,41 @@ public class ScoreService implements ScoreDAO {
 
     @Transactional
     @Override
-    public boolean addScore(String studentName, String subjectName, Integer scores) {
+    public boolean addScore(String studentName, String subjectName, LocalDateTime dateTime, double t1, double t2, double t3) {
         var student = studentService.findStudentByName(studentName).orElseThrow();
         var subject = subjectService.findSubjectByName(subjectName);
 
-        scoreRepository.save(new Score(scores, student, subject));
-        var savedScore = scoreRepository.findAll().stream()
-                .filter(score ->
-                        score.getStudent().getUser().getName().equals(studentName) &&
-                                score.getSubject().getName().equals(subjectName))
-                .findFirst().get();
-        return savedScore != null;
+            var alreadySavedScore = scoreRepository.findScore(subject.getId(), student.getId());
+
+            if (alreadySavedScore.isPresent()) {
+                var score = alreadySavedScore.get();
+                scoreRepository.updateScore(score.getId(), student.getId(), t1, t2, t3);
+                return scoreRepository.existsByStudentIdAndSubjectId(student.getId(), subject.getId());
+            }
+            scoreRepository.save(new Score(t1, t2, t3, student, subject));
+            return scoreRepository.existsByStudentIdAndSubjectId(student.getId(), subject.getId());
     }
 
     @Override
+    @Transactional
     public void updateScore(ScoreTransient oldScore, ScoreTransient update) {
-        var retrievedSubject = subjectService.getSubjects().stream().filter(subject ->
-                Objects.equals(subject.getName(), oldScore.getSubjectName())).findFirst().orElseThrow();
 
-        var retrievedStudent = studentService.getStudents().stream().filter(student ->
-                Objects.equals(student.getUser().getName(), oldScore.getStudentName())).findFirst().orElseThrow();
+       var stuId = oldScore.getStudentId();
+       var retrivedScore = scoreRepository.findAll().stream().filter(score ->
+               Objects.equals(score.getStudent().getId(), stuId)).findFirst().get();
+       retrivedScore.setT1(update.getT1());
+       retrivedScore.setT2(update.getT2());
+       retrivedScore.setT3(update.getT3());
+       scoreRepository.save(retrivedScore);
 
-        var retrievedScore = scoreRepository.findAll().stream().filter(
-                score -> Objects.equals(score.getScores(), oldScore.getScores())
-                         && Objects.equals(score.getSubject().getId(), retrievedSubject.getId())
-                        && Objects.equals(score.getStudent().getId(), retrievedStudent.getId()))
-                .findFirst().orElseThrow();
+    }
 
-        retrievedScore.setScores(update.getScores());
-       scoreRepository.save(retrievedScore);
+    @Transactional
+    @Override
+    public void deleteScore(String subject) {
+        var id = scoreRepository.findAll().stream().filter(score ->
+                Objects.equals(score.getSubject().getName(), subject)).findFirst().get().getId();
+        scoreRepository.deleteById(id);
     }
 }
 

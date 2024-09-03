@@ -39,8 +39,10 @@ class AdminServiceUnitTest {
 
         //Given
         var name = faker.name().name();
+        var email = faker.internet().emailAddress();
         var admin = new Admin(
                 1L, new User(name, Gender.MALE, LocalDateTime.now()),
+                email,
                 faker.internet().password());
 
         //When

@@ -23,9 +23,9 @@ public class TeacherController {
         return teacherService.findTeacherById(id).orElseThrow();
     }
 
-    @GetMapping(path = "api/v1/teachers/findByName/{name}")
-    Teacher getTeacherByName(@PathVariable("name") String name) {
-        return teacherService.findTeacherByName(name).orElseThrow();
+    @GetMapping(path = "api/v1/teachers/findByEmail/{email}/{subjectTaught}")
+    Teacher getTeacherByEmail(@PathVariable("email") String email, @PathVariable("subjectTaught") String subjectTaught) {
+        return teacherService.findTeacherTransByEmail(new TeacherTransient(email, subjectTaught)).orElseThrow();
     }
 
     @PostMapping(path = "api/v1/teacher")
@@ -42,6 +42,5 @@ public class TeacherController {
     boolean deleteTeacherByName(@PathVariable("name") String name) {
         return teacherService.deleteTeacherByName(name);
     }
-
 
 }
