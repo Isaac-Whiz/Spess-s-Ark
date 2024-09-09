@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1/subject")
 public class SubjectController {
 
     private final SubjectService subjectService;
@@ -13,17 +14,17 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    @PostMapping(path = "api/v1/subject")
+    @PostMapping(path = "addSubject")
     public boolean addSubject(@RequestBody Subject subject) {
         return subjectService.addSubject(subject.getName());
     }
 
-    @PutMapping(path = "api/v1/subjects/{oldName}/{newName}")
+    @PutMapping(path = "subjects/{oldName}/{newName}")
     public boolean updateSubject(@PathVariable("oldName") String oldName, @PathVariable("newName") String newName) {
         return subjectService.updateSubject(oldName, newName);
     }
 
-    @GetMapping(path = "api/v1/subjects")
+    @GetMapping(path = "subjects")
     public List<Subject> getSubjects() {
         return subjectService.getSubjects();
     }

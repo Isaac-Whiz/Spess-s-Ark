@@ -45,22 +45,22 @@ public class SecurityFilterChainConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) ->
                         request.requestMatchers(HttpMethod.POST,
-                                        "/api/v1/admin",
-                                        "/api/v1/teacher",
-                                        "api/v1/generateCode/**",
-                                        "api/v1/validateCode/**",
+                                        "/api/v1/admin/registerAdmin",
+                                        "/api/v1/registerTeacher",
+                                        "/api/v1/password/generateCode/**",
+                                        "/api/v1/code/password/validateCode/**",
                                         "/api/v1/auth/login",
-                                        "/api/v1/subject")
+                                        "/api/v1/subject/addSubject")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.GET,
-                                        "/api/v1/admins",
-                                        "/api/v1/tick",
-                                        "/api/v1/subjects",
-                                        "/api/v1/teachers/findByEmail/**")
+                                        "/api/v1/admin/admins",
+                                        "/api/v1/admin/tick",
+                                        "/api/v1/subject/subjects",
+                                        "/api/v1/teacher/teachers/findByEmail/**")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.PUT,
-                                        "api/v1/validate/**",
-                                        "api/v1/resetPassword/**"
+                                        "/api/v1/code/validate/**",
+                                        "/api/v1/password/resetPassword/**"
                                         )
                                 .permitAll()
                                 .anyRequest()

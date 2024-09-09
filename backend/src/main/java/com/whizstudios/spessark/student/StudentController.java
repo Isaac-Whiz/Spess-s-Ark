@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1/student")
 public class StudentController {
 
     private final StudentService studentService;
@@ -16,37 +17,37 @@ public class StudentController {
     }
 
 
-    @GetMapping(path = "api/v1/students")
+    @GetMapping(path = "students")
     List<Student> getStudents() {
         return studentService.getStudents();
     }
 
-    @GetMapping(path = "api/v1/students/findById/{id}")
+    @GetMapping(path = "students/findById/{id}")
     Student getStudentById(@PathVariable("id") long id) {
         return studentService.findStudentById(id).orElseThrow();
     }
 
-    @GetMapping(path = "api/v1/students/findByName/{name}")
+    @GetMapping(path = "students/findByName/{name}")
     Student getStudentByName(@PathVariable("name") String name) {
         return studentService.findStudentByName(name).orElseThrow();
     }
 
-    @PostMapping("api/v1/student/register")
+    @PostMapping("register")
     boolean registerStudent(@RequestBody StudentScore studentScore) {
         return studentService.saveStudent(studentScore.getStudent(), studentScore.getScore());
     }
 
-    @PutMapping(path = "api/v1/students/update")
+    @PutMapping(path = "students/update")
     Student updateStudent(@RequestBody StudentUpdateRequest request) {
         return studentService.updateStudent(request.getOldStudent(), request.getUpdate());
     }
 
-    @DeleteMapping(path = "api/v1/students/delete/{name}")
+    @DeleteMapping(path = "students/delete/{name}")
     boolean deleteStudentByName(@PathVariable("name") String name) {
         return studentService.deleteStudentByName(name);
     }
 
-    @DeleteMapping(path = "api/v1/students/delete/id/{id}")
+    @DeleteMapping(path = "students/delete/id/{id}")
     boolean deleteStudentById(@PathVariable("id") Long id) {
         return studentService.deleteStudentById(id);
     }
