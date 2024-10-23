@@ -46,7 +46,7 @@ public class SecurityFilterChainConfig {
                 .authorizeHttpRequests((request) ->
                         request.requestMatchers(HttpMethod.POST,
                                         "/api/v1/admin/registerAdmin",
-                                        "/api/v1/registerTeacher",
+                                        "/api/v1/teacher/registerTeacher",
                                         "/api/v1/password/generateCode/**",
                                         "/api/v1/code/password/validateCode/**",
                                         "/api/v1/auth/login",

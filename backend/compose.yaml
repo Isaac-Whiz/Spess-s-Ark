@@ -4,7 +4,7 @@ services:
     container_name: spess-cont
     environment:
        POSTGRES_DB: spess
-       POSTGRES_USER: whiz
+       POSTGRES_USER: postgres
        POSTGRES_PASSWORD: whiz
     ports:
       - "2000:5432"
