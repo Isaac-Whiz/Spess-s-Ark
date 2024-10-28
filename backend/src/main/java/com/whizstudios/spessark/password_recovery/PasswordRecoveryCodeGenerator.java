@@ -25,7 +25,7 @@ public class PasswordRecoveryCodeGenerator {
     private final TeacherRepository teacherRepository;
     private final AdminRepository adminRepository;
     private final SecurityConfig config;
-    private Map<String, Instant> codeStore = new ConcurrentHashMap<>();
+    private final Map<String, Instant> codeStore = new ConcurrentHashMap<>();
 
 
     public PasswordRecoveryCodeGenerator(EmailSender emailSender,

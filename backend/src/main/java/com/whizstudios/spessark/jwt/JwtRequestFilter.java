@@ -42,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 email = jwtUtil.extractUsername(jwt);
 
-            } catch (ExpiredJwtException | SignatureException e) {
+            } catch (ExpiredJwtException | SignatureException ignored) {
 
             }
 
