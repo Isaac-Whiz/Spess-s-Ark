@@ -28,7 +28,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
     Optional<Admin> adminUserOpt = Optional.empty();
     try {
         adminUserOpt = adminService.findAdminByEmail(email);
-    } catch (Exception e) {}
+    } catch (Exception ignored) {}
 
     if (adminUserOpt.isPresent()) {
         Admin adminUser = adminUserOpt.get();
@@ -42,7 +42,7 @@ public UserDetails loadUserByUsername(String email) throws UsernameNotFoundExcep
     Optional<Teacher> teacherUserOpt = Optional.empty();
     try {
         teacherUserOpt = teacherService.findTeacherByEmail(email);
-    } catch (Exception e) {}
+    } catch (Exception ignored) {}
 
     if (teacherUserOpt.isPresent()) {
         Teacher teacherUser = teacherUserOpt.get();

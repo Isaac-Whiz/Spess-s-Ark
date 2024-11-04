@@ -18,11 +18,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Optional<Student> findByUser_Name(String name);
 
-//    @Query("SELECT CASE WHEN COUNT(s) > 0 THEN TRUE ELSE FALSE END FROM Student s WHERE s.classLevel.name = :classLevel_name " +
-//            "AND s.classLevel.stream = :classLevel_stream AND s.user.gender = :user_gender AND s.user.name = :user_name")
-//    boolean isAlreadyAvailableStudent(
-//            String classLevel_name,
-//            Stream classLevel_stream,
-//            Gender user_gender,
-//            String user_name);
 }
